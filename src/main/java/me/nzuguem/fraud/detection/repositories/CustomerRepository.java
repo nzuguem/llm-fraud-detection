@@ -13,4 +13,9 @@ public class CustomerRepository implements PanacheRepository<Customer> {
         return find("id", id).firstResult().name;
     }
 
+    @Tool("get the customer email for the given customerId")
+    public String getCustomerEmail(long id) {
+        return find("id", id).firstResult().email;
+    }
+
 }

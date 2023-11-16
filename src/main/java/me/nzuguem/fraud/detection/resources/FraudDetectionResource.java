@@ -8,9 +8,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import me.nzuguem.fraud.detection.models.AmountFraudDetection;
-import me.nzuguem.fraud.detection.models.DistanceFraudDetection;
 import me.nzuguem.fraud.detection.repositories.TransactionRepository;
-import me.nzuguem.fraud.detection.services.llm.FraudDetectionService;
+import me.nzuguem.fraud.detection.business.llm.FraudDetectionService;
 
 @Path("fraud/detection")
 @RunOnVirtualThread

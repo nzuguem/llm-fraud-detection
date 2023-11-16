@@ -1,4 +1,4 @@
-package me.nzuguem.fraud.detection.services.llm;
+package me.nzuguem.fraud.detection.business.llm;
 
 
 import dev.langchain4j.service.SystemMessage;
@@ -8,6 +8,7 @@ import me.nzuguem.fraud.detection.models.AmountFraudDetection;
 import me.nzuguem.fraud.detection.models.DistanceFraudDetection;
 import me.nzuguem.fraud.detection.repositories.CustomerRepository;
 import me.nzuguem.fraud.detection.repositories.TransactionRepository;
+import me.nzuguem.fraud.detection.services.email.EmailService;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 
@@ -15,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 
 @RegisterAiService(
         chatMemoryProviderSupplier = RegisterAiService.BeanChatMemoryProviderSupplier.class,
-        tools = {TransactionRepository.class, CustomerRepository.class })
+        tools = {TransactionRepository.class, CustomerRepository.class, EmailService.class})
 public interface FraudDetectionService {
 
     @SystemMessage("""
@@ -29,6 +30,7 @@ public interface FraudDetectionService {
             2 - Retrieve the transactions for the customer {{customerId}} for the last 15 minutes.
             3 - Sum the amount of the all these transactions. Make sure the sum is correct.
             4 - If the amount is greater than 10000, a fraud is detected.
+            5 - If a fraud is detected, retrieve the email of the customer {{customerId}}, 
 
             Answer with a **single** JSON document containing:
             - the customer name in the 'customer-name' key
@@ -37,8 +39,10 @@ public interface FraudDetectionService {
             - the 'transactions' key set to the list of transaction amounts
             - the 'explanation' key set to a explanation of your answer, especially how the sum is computed.
             - the 'email' key set to an email to the customer {{customerId}} to warn him about the fraud, if detected. The text must be formal and polite. It must ask the customer to contact the bank ASAP.
-                         
-            Your response must be just the raw JSON document, without ```json, ``` or anything else.            
+            
+            Send the content of the generated 'email' to the customer email address, if fraud detected   
+                     
+            Your response must be just the raw JSON document, without ```json, ``` or anything else.          
             """)
     @Timeout(value = 2, unit = ChronoUnit.MINUTES)
     @Fallback(fallbackMethod = "fallbackAmount")
@@ -56,6 +60,7 @@ public interface FraudDetectionService {
             3 - Retrieve the city for each transaction.
             4 - Check if the distance between 2 cities is greater than 500km, if so, a fraud is detected.
             5 - If a fraud is detected, find the two transactions associated with these cities.
+            6 - If a fraud is detected, retrieve the email of the customer {{customerId}}
 
             Answer with a **single** JSON document containing:
             - the customer name in the 'customer-name' key
@@ -68,7 +73,9 @@ public interface FraudDetectionService {
             - the 'explanation' key containing a explanation of your answer.
             - the 'cities' key containing all the cities for the transactions for the customer {{customerId}} in the last 15 minutes.
             - the 'email' key containing an email to the customer {{customerId}} to warn him about the fraud, if detected. The text must be formal and polite. It must ask the customer to contact the bank ASAP.
-
+            
+            Send the content of the generated 'email' to the customer email address, if fraud detected
+            
             Your response must be just the raw JSON document, without ```json, ``` or anything else.
             """)
     @Timeout(value = 2, unit = ChronoUnit.MINUTES)
