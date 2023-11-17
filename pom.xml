@@ -47,6 +47,11 @@
       <version>0.1.0</version>
     </dependency>
     <dependency>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-hugging-face</artifactId>
+      <version>0.1.0</version>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm-panache</artifactId>
     </dependency>
