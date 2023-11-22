@@ -76,6 +76,21 @@
       <artifactId>quarkus-mailer</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.quarkiverse.mailpit</groupId>
+      <artifactId>quarkus-mailpit</artifactId>
+      <version>0.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.mailpit</groupId>
+      <artifactId>quarkus-mailpit-testing</artifactId>
+      <version>0.0.7</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>

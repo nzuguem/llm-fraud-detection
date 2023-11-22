@@ -60,7 +60,7 @@ public class LLMFraudDetectionApplication {
 
         this.transactions.deleteAll();
 
-        var transactionsList = IntStream.rangeClosed(1, 50)
+        var transactionsList = IntStream.rangeClosed(1, 100)
                 .mapToObj(__ -> {
                     var transaction = new Transaction();
                     // Get a random customer
