@@ -6,7 +6,6 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import me.nzuguem.fraud.detection.entities.Transaction;
 import me.nzuguem.fraud.detection.entities.Transaction$;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
